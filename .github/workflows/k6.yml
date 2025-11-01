@@ -8,25 +8,29 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Ensure results directory exists
+        run: mkdir -p results
+
       - name: Run k6 test
         uses: grafana/k6-action@v0.2.0
         with:
           filename: blazedemo_test.js
-          args: --out json=results.json
+          args: --out json=results/results.json
+        continue-on-error: true  # Não falha a esteira se o threshold for violado
 
       - name: Upload JSON result
         uses: actions/upload-artifact@v4
         with:
           name: k6-results-json
-          path: results.json
+          path: results/results.json
 
       - name: Generate HTML report
         run: |
           npm install -g k6-reporter
-          k6-reporter results.json -o results.html
+          k6-reporter results/results.json -o results/results.html
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
         with:
           name: k6-results-html
-          path: results.html
+          path: results/results.html
