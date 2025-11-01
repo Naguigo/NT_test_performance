@@ -1,0 +1,32 @@
+name: k6 Performance Test
+
+on: [push, pull_request]
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run k6 test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: blazedemo_test.js
+          args: --out json=results.json
+
+      - name: Upload JSON result
+        uses: actions/upload-artifact@v3
+        with:
+          name: k6-results-json
+          path: results.json
+
+      - name: Generate HTML report
+        run: |
+          npm install -g k6-reporter
+          k6-reporter results.json -o results.html
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v3
+        with:
+          name: k6-results-html
+          path: results.html
