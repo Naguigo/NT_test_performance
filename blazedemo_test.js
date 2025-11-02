@@ -7,9 +7,9 @@ export let options = {
   scenarios: {
     load_test: {
       executor: 'constant-arrival-rate',
-      rate: 250, // 250 requisições por segundo
+      rate: 250,
       timeUnit: '1s',
-      duration: '5s',
+      duration: '10s',
       preAllocatedVUs: 300,
       maxVUs: 500,
     },
@@ -62,6 +62,6 @@ export default function () {
 export function handleSummary(data) {
   return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true }),
-    'results.html': htmlReport(data),
+    'results/report.html': htmlReport(data), // <── caminho explícito
   };
 }

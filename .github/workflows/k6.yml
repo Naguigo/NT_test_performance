@@ -16,8 +16,11 @@ jobs:
           filename: blazedemo_test.js
         continue-on-error: true
 
+      - name: Verify report file
+        run: ls -R results || echo "No results found"
+
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
         with:
           name: k6-results-html
-          path: results.html
+          path: results/report.html
