@@ -2,3 +2,4 @@
 *.json
 *.html
 /.vscode
+*.DS_Store
