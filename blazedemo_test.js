@@ -9,7 +9,7 @@ export let options = {
       executor: 'constant-arrival-rate',
       rate: 250, // 250 requisições por segundo
       timeUnit: '1s',
-      duration: '10s',
+      duration: '5s',
       preAllocatedVUs: 300,
       maxVUs: 500,
     },
@@ -62,6 +62,6 @@ export default function () {
 export function handleSummary(data) {
   return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true }),
-    'results/results.html': htmlReport(data),
+    'results.html': htmlReport(data),
   };
 }
